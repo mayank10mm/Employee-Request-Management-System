@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PulseFit Requests",
-  description: "Internal employee request system for fitness operations teams",
+  title: "Physique Employee Portal",
+  description: "Internal employee request system for Physique teams",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -51,10 +51,10 @@ export function AppShell({
               href={session.role === "EMPLOYER" ? "/dashboard" : "/"}
               className="text-sm font-semibold tracking-wide text-teal-700"
             >
-              PulseFit Requests
+              Physique Employee Portal
             </Link>
             <p className="mt-1 text-xs text-slate-500">
-              Fitness ops helpdesk ·{" "}
+              Physique employee helpdesk ·{" "}
               {session.role === "EMPLOYEE" ? "Employee" : "Employer"} ·{" "}
               {session.name} · {session.email}
             </p>
@@ -92,7 +92,7 @@ export function AppShell({
       >
         <div className="mb-8">
           <p className="mb-2 inline-flex rounded-full bg-orange-50 px-3 py-1 text-xs font-medium text-orange-700 ring-1 ring-orange-200">
-            Built for fitness teams
+            Built for Physique
           </p>
           <h1 className="text-3xl font-semibold tracking-tight text-slate-900">
             {title}

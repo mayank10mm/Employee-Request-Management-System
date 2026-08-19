@@ -35,13 +35,13 @@ export default function LoginPage() {
       <div className="w-full max-w-3xl">
         <div className="mb-8 text-center">
           <p className="text-sm font-semibold tracking-wide text-teal-700">
-            PulseFit Requests
+            Physique Employee Portal
           </p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900">
             Choose a demo role
           </h1>
           <p className="mt-3 text-sm text-slate-600">
-            Internal request system for a fitness organization — leave, IT,
+            Internal request system for Physique — leave, IT,
             payroll, and ops support in one place.
           </p>
         </div>

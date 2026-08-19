@@ -1,5 +1,6 @@
+# Physique Employee Portal
 
-Employee Request Management System PoC for a fitness organization.
+Employee Request Management System PoC for Physique.
 
 Employees submit internal requests (leave, IT, payroll, operations). The system auto-categorizes, assigns an agent, tracks SLA, and supports Open → Active → Finalized.
 
