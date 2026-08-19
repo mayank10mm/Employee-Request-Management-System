@@ -1,4 +1,3 @@
-# PulseFit Requests
 
 Employee Request Management System PoC for a fitness organization.
 
