@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PulseFit Requests
 
-## Getting Started
+Employee Request Management System PoC for a fitness organization.
 
-First, run the development server:
+Employees submit internal requests (leave, IT, payroll, operations). The system auto-categorizes, assigns an agent, tracks SLA, and supports Open → Active → Finalized.
+
+## Stack
+
+- Next.js (App Router) + TypeScript + Tailwind CSS
+- Prisma + Neon (PostgreSQL)
+- Demo Employee / Employer roles (cookie session, no real auth)
+
+## Features
+
+- Request intake form with unique `EMP-xxxxx` IDs
+- Keyword-based department categorization
+- Least-loaded agent assignment
+- SLA tracking and escalation flags
+- Employee portal + Employer dashboard
+- Search and status workflow for employers
+
+## Local setup
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Copy env file and add your Neon connection string:
+
+```bash
+cp .env.example .env
+```
+
+3. Apply database schema and seed agents:
+
+```bash
+npx prisma migrate deploy
+npm run db:seed
+```
+
+4. Start the app:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) and choose **Employee** or **Employer**.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Demo accounts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Role | Name | Email |
+|------|------|-------|
+| Employee | Demo Employee | employee@company.com |
+| Employer | Employer Admin | employer@company.com |
 
-## Learn More
+## Production deploy (Vercel)
 
-To learn more about Next.js, take a look at the following resources:
+1. Push this repo to GitHub.
+2. Import the project in Vercel.
+3. Set environment variable:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```text
+DATABASE_URL=your_neon_pooled_connection_string
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. Deploy. On first deploy, run migrations against Neon:
 
-## Deploy on Vercel
+```bash
+npx prisma migrate deploy
+npm run db:seed
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deliverables
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Workflow diagram / Part 1 PDF: `docs/`
+- Working prototype: this app
+- Solution summary: write separately (max 2 pages)
+
+## Scripts
+
+| Command | Purpose |
+|---------|---------|
+| `npm run dev` | Local development |
+| `npm run build` | Production build |
+| `npm run start` | Run production build |
+| `npm run db:seed` | Seed demo agents |
+| `npm run docs:workflow-pdf` | Regenerate Part 1 PDF |
+
+## Security notes
+
+- Never commit `.env`.
+- Rotate the Neon password if it was ever shared in chat or screenshots.
+- Demo roles are for assessment only; production should use real SSO/RBAC.

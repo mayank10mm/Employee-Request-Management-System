@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Employee Request Workflow — Export</title>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({ startOnLoad: true, theme: "neutral" });
+    </script>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Georgia, "Times New Roman", serif;
+        background: #f4f6f8;
+        color: #18181b;
+      }
+      body {
+        margin: 0;
+        padding: 32px 24px 64px;
+      }
+      .wrap {
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      h1 {
+        font-size: 2rem;
+        margin: 0 0 8px;
+      }
+      .sub {
+        color: #52525b;
+        margin-bottom: 24px;
+        line-height: 1.5;
+      }
+      .card {
+        background: #fff;
+        border: 1px solid #e4e4e7;
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+      }
+      .hint {
+        margin-top: 16px;
+        font-size: 0.9rem;
+        color: #71717a;
+      }
+      @media print {
+        body {
+          background: #fff;
+          padding: 0;
+        }
+        .hint {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>Employee Request Lifecycle</h1>
+      <p class="sub">
+        Intake → ID → Categorize → Assign → OPEN → SLA check → ACTIVE → Resolve →
+        FINALIZED → Archive.
+      </p>
+      <div class="card">
+        <pre class="mermaid">
+flowchart TD
+  subgraph intake ["1. Omni-channel Intake"]
+    portal["Web Portal"]
+    email["Email"]
+    whatsapp["WhatsApp"]
+    sms["SMS"]
+    unified["Unified API"]
+    portal --> unified
+    email --> unified
+    whatsapp --> unified
+    sms --> unified
+  end
+
+  idGen["2. Generate EMP-xxxxx ID + PostgreSQL + audit"]
+  categorize["3. Auto Categorization HR / IT / Payroll / Ops / Other"]
+  assign["4. Assign least-loaded agent"]
+  openNode["5. Status OPEN"]
+  slaCheck{"6. SLA breached?"}
+  escalate["Escalate to Department Lead"]
+  activeNode["7. Status ACTIVE"]
+  resolve["8. Resolve issue"]
+  finalized["9. Status FINALIZED"]
+  archive["10. Archive for reporting"]
+
+  unified --> idGen --> categorize --> assign --> openNode --> slaCheck
+  slaCheck -->|Yes| escalate --> activeNode
+  slaCheck -->|No| activeNode
+  activeNode --> resolve --> finalized --> archive
+        </pre>
+      </div>
+      <p class="hint">
+        Tip: use your browser Print → Save as PDF, or open
+        Employee-Request-Workflow-Part1.pdf for the ready-made Part 1 document.
+      </p>
+    </div>
+  </body>
+</html>

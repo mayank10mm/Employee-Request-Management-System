@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  EMPLOYEE
+  AGENT
+  MANAGER
+  ADMIN
+}
+
+enum Department {
+  HR
+  IT
+  PAYROLL
+  OPERATIONS
+  OTHER
+}
+
+enum RequestStatus {
+  OPEN
+  ACTIVE
+  FINALIZED
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+model User {
+  id         String       @id @default(cuid())
+  name       String
+  email      String       @unique
+  role       Role
+  department Department?
+
+  assignedRequests  Request[]        @relation("Assignee")
+  submittedRequests Request[]        @relation("Requester")
+  historyEntries    RequestHistory[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Request {
+  id             String        @id @default(cuid())
+  requestCode    String        @unique
+  employeeName   String
+  employeeEmail  String
+  employeeId     String?
+  employee       User?         @relation("Requester", fields: [employeeId], references: [id])
+  subject        String
+  description    String
+  department     Department
+  priority       Priority
+  status         RequestStatus @default(OPEN)
+  assignedToId   String?
+  assignedTo     User?         @relation("Assignee", fields: [assignedToId], references: [id])
+  slaFirstResponseAt DateTime?
+  slaDeadline    DateTime
+  slaBreached    Boolean       @default(false)
+  escalatedTo    String?
+  resolvedAt     DateTime?
+  history        RequestHistory[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model RequestHistory {
+  id            String   @id @default(cuid())
+  requestId     String
+  request       Request  @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  action        String
+  detail        String?
+  performedById String?
+  performedBy   User?    @relation(fields: [performedById], references: [id])
+  createdAt     DateTime @default(now())
+}
